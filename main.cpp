@@ -29,12 +29,43 @@ int main(int argc, char** argv) {
                                         {"right", "up"},
                                         {"left", "right", "up"},
                                         {"left", "up"}};
-    double theta = 0.09;
+    double theta = 0.000001;
     double gamma = 0.8;
     int it = 0;
-    double V [6] = {0,0,0,0,0,0};
-    double delta = 1;
-    
+    double V [6] = {2,5,0,10,1,10};
+    double delta;
+    while (true){
+        it++;
+        delta = 0;
+        for (int s = 0; s < 6; s++){
+            double v = V[s];
+            for (int i = 0; i < policy[s].size(); i++){
+                if(policy[s][i] == "right"){
+                    if(s == 1)
+                        V[s] = 50 + (gamma*V[s+1]);
+                    else
+                        V[s] = gamma * V[s+1];
+                }
+                else if(policy[s][i] == "left"){
+                    V[s] = gamma * V[s-1];
+                }
+                else if(policy[s][i] == "up"){
+                    if(s == 5)
+                        V[s] = 100 + (gamma*V[s-3]);
+                    else
+                        V[s] = gamma * V[s+1];
+                }
+                else if(policy[s][i] == "down"){
+                    V[s] = gamma * V[s+3];
+                }
+            }
+            double d = abs(v-V[s]);
+            delta = (delta>d?delta:d);
+        }
+        
+        if(delta < theta)
+            break;
+    }
     cout<<"Number of iterations: "<<it<<endl;
     for(int i = 0; i < 5; i++)
         cout<<V[i]<<" ";
