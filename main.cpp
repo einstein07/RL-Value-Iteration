@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -31,8 +32,10 @@ int main(int argc, char** argv) {
                                         {0, 100}};
     double theta = 0.000001;
     double gamma = 0.8;
-    double V [6] = {0,5,0,10,1,10};
-    int it = MKHSIN035::value_iteration(theta, gamma, actions, V);
+    double V [6] = {0,0,0,0,0,0};
+    int it = MKHSIN035::value_iteration( theta, gamma, actions, rewards, V);
+    
+    
     //--------------------------------------------------------------------------
     //Write data to textfile
     //--------------------------------------------------------------------------

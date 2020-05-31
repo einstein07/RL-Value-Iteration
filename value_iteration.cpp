@@ -6,38 +6,40 @@
  */
 #include "value_iteration.h"
 
-int MKHSIN035::value_iteration(double theta, double gamma, const std::vector<std::vector<std::string > > &actions, double* V){
+int MKHSIN035::value_iteration(double theta, double gamma, const std::vector<std::vector<std::string > > &actions, const std::vector<std::vector<int > > &rewards, double* V){
         
     int it = 0;
     double delta;
     while (true){
         it++;
         delta = 0;
+                    
         for (int s = 0; s < 6; s++){
             double v = V[s];
+            double maxValue = -1.0;
+            double nxtValue = 0.0;
             for (int i = 0; i < actions[s].size(); i++){
                 if(actions[s][i] == "right"){
-                    if(s == 1)
-                        V[s] = 50 + (gamma*V[s+1]);
-                    else
-                        V[s] = gamma * V[s+1];
+                    nxtValue = rewards[s][i] + gamma * V[s+1];
                 }
                 else if(actions[s][i] == "left"){
-                    V[s] = gamma * V[s-1];
+                    nxtValue = rewards[s][i] + gamma * V[s-1];
                 }
                 else if(actions[s][i] == "up"){
-                    if(s == 5)
-                        V[s] = 100 + (gamma*V[s-3]);
-                    else
-                        V[s] = gamma * V[s+1];
+                    nxtValue = rewards[s][i] + gamma * V[s-3];
                 }
                 else if(actions[s][i] == "down"){
-                    V[s] = gamma * V[s+3];
+                    nxtValue = rewards[s][i] + gamma * V[s+3];
                 }
+                maxValue = (nxtValue>maxValue?nxtValue:maxValue);
+
             }
+            V[s] = maxValue;
+            //std::cout<<"State: "<<(s+1)<<"iteration "<<it<<" Value: "<<V[s]<<endl;
             double d = abs(v-V[s]);
             delta = (delta>d?delta:d);
         }
+
         
         if(delta < theta)
             break;
