@@ -4,62 +4,35 @@
  * Student Number:  MKHSIN035
  * Created on 23 May 2020, 22:27
  */
-
+#include "value_iteration.h"
 #include <cstdlib>
 #include <vector>
 #include <string>
 #include <fstream>
+
 using namespace std;
 
 /*
  * Assignment 6 driver file for testing Value iteration algorithm implementation
  */
 int main(int argc, char** argv) {
-    int states [6] = {1,2,3,4,5,6};
-    string action [4] = {"left", "right", "up", "down"};
+
     vector < vector<string> > actions = {{"right","down"},
                                         {"left","right", "down"},
                                         {""},
                                         {"right", "up"},
                                         {"left", "right", "up"},
                                         {"left", "up"}};
+    vector < vector<int> > rewards = {{0,0},
+                                        {0,50, 0},
+                                        {0},
+                                        {0, 0},
+                                        {0, 0, 0},
+                                        {0, 100}};
     double theta = 0.000001;
     double gamma = 0.8;
-    int it = 0;
-    double V [6] = {2,5,0,10,1,10};
-    double delta;
-    while (true){
-        it++;
-        delta = 0;
-        for (int s = 0; s < 6; s++){
-            double v = V[s];
-            for (int i = 0; i < actions[s].size(); i++){
-                if(actions[s][i] == "right"){
-                    if(s == 1)
-                        V[s] = 50 + (gamma*V[s+1]);
-                    else
-                        V[s] = gamma * V[s+1];
-                }
-                else if(actions[s][i] == "left"){
-                    V[s] = gamma * V[s-1];
-                }
-                else if(actions[s][i] == "up"){
-                    if(s == 5)
-                        V[s] = 100 + (gamma*V[s-3]);
-                    else
-                        V[s] = gamma * V[s+1];
-                }
-                else if(actions[s][i] == "down"){
-                    V[s] = gamma * V[s+3];
-                }
-            }
-            double d = abs(v-V[s]);
-            delta = (delta>d?delta:d);
-        }
-        
-        if(delta < theta)
-            break;
-    }
+    double V [6] = {0,5,0,10,1,10};
+    int it = MKHSIN035::value_iteration(theta, gamma, actions, V);
     //--------------------------------------------------------------------------
     //Write data to textfile
     //--------------------------------------------------------------------------

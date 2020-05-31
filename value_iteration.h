@@ -8,8 +8,9 @@
 #ifndef VALUE_ITERATION_H
 #define VALUE_ITERATION_H
 #include <string>
-
-int value_iteration(double theta, double gamma, std::string[]& actions, int& V);
-
+#include <vector>
+namespace MKHSIN035{
+    int value_iteration(double theta, double gamma, const std::vector<std::vector<std::string > > &actions, double* V);
+};
 #endif /* VALUE_ITERATION_H */
 
