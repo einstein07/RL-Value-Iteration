@@ -14,7 +14,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
-#include <iostream>
+#include <fstream>
 using namespace std;
 
 /*
@@ -66,10 +66,14 @@ int main(int argc, char** argv) {
         if(delta < theta)
             break;
     }
-    cout<<"Number of iterations: "<<it<<endl;
+    ofstream file;
+    file.open("output.txt");
+    file<<"Question 1:\nNumber of iterations: "<<it<<"\nOptimal values for each state: \n";
     for(int i = 0; i < 5; i++)
-        cout<<V[i]<<" ";
-    cout<<V[5]<<endl;
+        file<<"S"<<(i+1)<<":"<<V[i]<<" ";
+    file<<"S6:"<<V[5]<<endl;
+    
+    file<<"Question 2: S1->S2->S5->S6->S3\n";
     return 0;
 }
 
