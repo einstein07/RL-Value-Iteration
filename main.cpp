@@ -55,8 +55,10 @@ int main(int argc, char** argv) {
         file<<"Question 2:\n";
         file<<"--------------------------------------------------------------------------\n";
         //By observation:
-        file<<"States forming the optimal policy, starting from S1, to reach the"
-                " terminal state S3:\nS1->S2->S5->S6->S3\n";
+        file<<"States forming the optimal policy(two optimal policies were "
+                "identified), starting from S1, to reach the"
+                " terminal state S3:\nS1->S2->S5->S6->S3\n"
+                "S1->S4->S5->S6->S3\n";
         file<<"--------------------------------------------------------------------------\n";
         //For Question 3, the reward function is changed by doubling the rewards to test this fact
         vector < vector<int> > doubled_rewards = {{0,0},
