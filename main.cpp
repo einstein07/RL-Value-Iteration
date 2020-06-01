@@ -35,8 +35,9 @@ int main(int argc, char** argv) {
     double theta = 0.000001;//A very small number that specifies the degree of error and convergence of our algorithm
     double gamma = 0.8; //Discount factor
     double V [6] = {0,0,0,0,0,0}; //Optimal values array
+    std::cout<<"Implementing Value Iteration algorithm..."<<endl;
     int it = MKHSIN035::value_iteration( states, theta, gamma, actions, rewards, V);
-    
+    std::cout<<"Completed in: "<<it<<" iterations!\nSee output file (output_MKHSIN035.txt) for details."<<endl;
     //--------------------------------------------------------------------------
     //Write data to textfile
     //--------------------------------------------------------------------------
