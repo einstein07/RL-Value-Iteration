@@ -18,22 +18,23 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-    int states = 6;
-    vector < vector<string> > actions = {{"right","down"},
-                                        {"left","right", "down"},
-                                        {""},
-                                        {"right", "up"},
-                                        {"left", "right", "up"},
-                                        {"left", "up"}};
+    int states = 6; //Number of states. The states are simply represented  by numbers in this implementation
+    vector < vector<string> > actions = {{"right","down"}, //State:1
+                                        {"left","right", "down"},//State:2
+                                        {""},//State:3
+                                        {"right", "up"},//State:4
+                                        {"left", "right", "up"},//State:5
+                                        {"left", "up"}};//State:6
+    //Rewards function:
     vector < vector<int> > rewards = {{0,0},
                                         {0,50, 0},
                                         {0},
                                         {0, 0},
                                         {0, 0, 0},
                                         {0, 100}};
-    double theta = 0.000001;
-    double gamma = 0.8;
-    double V [6] = {0,0,0,0,0,0};
+    double theta = 0.000001;//A very small number that specifies the degree of error and convergence of our algorithm
+    double gamma = 0.8; //Discount factor
+    double V [6] = {0,0,0,0,0,0}; //Optimal values array
     int it = MKHSIN035::value_iteration( states, theta, gamma, actions, rewards, V);
     
     //--------------------------------------------------------------------------
@@ -50,7 +51,6 @@ int main(int argc, char** argv) {
         file<<"Number of iterations: "<<it<<"\nOptimal values for each state: \n";
         for(int i = 0; i < states; i++)
             file<<"S"<<(i+1)<<":"<<V[i]<<"\n";
-        //file<<"S6:"<<V[5]<<endl;
         file<<"--------------------------------------------------------------------------\n";
         file<<"Question 2:\n";
         file<<"--------------------------------------------------------------------------\n";
@@ -79,7 +79,6 @@ int main(int argc, char** argv) {
                 " policy remains the same.\nNumber of iterations: "<<it<<endl;
         for(int i = 0; i < states; i++)
             file<<"S"<<(i+1)<<":"<<doubled_V[i]<<"\n";
-        //file<<"S6:"<<doubled_V[5]<<endl;
     }
     //If file could not be opened, notify the user
     else{

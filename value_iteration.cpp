@@ -14,10 +14,12 @@ int MKHSIN035::value_iteration(int states, double theta, double gamma, const std
         it++;
         delta = 0;
                     
+        //Loop through all states
         for (int s = 0; s < states; s++){
             double v = V[s];
             double maxValue = -1.0;
             double nxtValue = 0.0;
+            //Iterate through all possible actions for each state
             for (int i = 0; i < actions[s].size(); i++){
                 if(actions[s][i] == "right"){
                     nxtValue = rewards[s][i] + gamma * V[s+1];
@@ -31,6 +33,7 @@ int MKHSIN035::value_iteration(int states, double theta, double gamma, const std
                 else if(actions[s][i] == "down"){
                     nxtValue = rewards[s][i] + gamma * V[s+3];
                 }
+                //Check for max action
                 maxValue = (nxtValue>maxValue?nxtValue:maxValue);
 
             }
@@ -39,7 +42,7 @@ int MKHSIN035::value_iteration(int states, double theta, double gamma, const std
             delta = (delta>d?delta:d);
         }
 
-        
+        //check for convergence
         if(delta < theta)
             break;
     }
